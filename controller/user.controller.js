@@ -19,7 +19,7 @@ exports.TampilSemuaUser = function (req, res) {
 
 //menampilkan semua data user berdasarkan id
 exports.tampilberdasarkanid = function (req, res) {
-  let id = req.params.user_id;
+  let id = req.params.id;
   connection.query("SELECT * FROM user WHERE user_id = ?", [id], function (
     error,
     rows,
@@ -41,7 +41,7 @@ exports.tambahUser = function (req, res) {
   var password = req.body.password;
 
   connection.query(
-    "INSERT INTO mahasiswa (user_id, nama, username, password) VALUES(?,?,?,?)",
+    "INSERT INTO user (user_id, nama, username, password) VALUES(?,?,?,?)",
     [id, nama, username, password],
     function (error, rows, fields) {
       if (error) {
