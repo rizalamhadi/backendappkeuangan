@@ -6,7 +6,7 @@ const conn = mysql.createConnection({
     user:'root',
     password:'',
     database:'restapidb',
-    port: '3307'
+    port: '3306'
 });
 
 conn.connect((err)=>{
