@@ -1,9 +1,9 @@
 "use strict";
 
 module.exports = function (app) {
-          var user = require("../controller/user.controller");
-          var transaksi = require("../controller/transaksi.controller")
-//route user
+  var user = require("../controller/user.controller");
+  var transaksi = require("../controller/transaksi.controller");
+  //route user
   app.route("/").get(user.index);
 
   app.route("/user").get(user.TampilSemuaUser);
@@ -14,12 +14,10 @@ module.exports = function (app) {
 
   app.route("/user").put(user.ubahUser);
 
-          app.route("/user").delete(user.hapusUser);
+  app.route("/user").delete(user.hapusUser);
 
-          
-          //route transaksi
-          app.route('/transaksi/masuk').get(transaksi.TampilTransaksiPemasukkan)
-          app.route('/transaksi/keluar').get(transaksi.TampilTransaksiPengeluaran)
-          app.route('/transaksi'). get(transaksi.TampilTransaksi)
-
+  //route transaksi
+  app.route("/transaksi/masuk").get(transaksi.TampilTransaksiPemasukkan);
+  app.route("/transaksi/keluar").get(transaksi.TampilTransaksiPengeluaran);
+  app.route("/transaksi").get(transaksi.TampilTransaksi);
 };

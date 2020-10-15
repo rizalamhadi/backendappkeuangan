@@ -1,10 +1,10 @@
 var connection = require("../koneksi");
-var mysql = require('mysql');
-var md5 = require('md5');
-var response = require('../res');
-var jwt = require('jsonwebtoken');
-var config = require('../config/secret');
-var ip = require('ip');
+var mysql = require("mysql");
+var md5 = require("md5");
+var response = require("../res");
+var jwt = require("jsonwebtoken");
+var config = require("../config/secret");
+var ip = require("ip");
 
 //controller untuk registrasi
 
@@ -69,7 +69,7 @@ exports.login = function (req, res) {
         var data = {
           user_id: user_id,
           akses_token: token,
-          ip_address: ip.address()
+          ip_address: ip.address(),
         };
         var query = "insert into ?? set ?";
         var table = ["akses_token"];
@@ -93,6 +93,19 @@ exports.login = function (req, res) {
           message: "email atau passwordnya salah",
         });
       }
+    }
+  });
+};
+
+exports.halamanrahasia = function (req, res) {
+  response.ok("Halaman ini hanya untuk user dengan role = 2!", res);
+};
+exports.adminm = function (req, res) {
+  connection.query("SELECT * FROM user", function (error, rows, fileds) {
+    if (error) {
+      console.log(error);
+    } else {
+      response.ok(rows, res);
     }
   });
 };
