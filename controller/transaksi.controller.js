@@ -25,7 +25,7 @@ exports.TampilTransaksiPengeluaran = function (req, res) {
             }
           });
 };
-exports.TampilTransaksi = function (req, res) {
+exports.RekapTransaksi = function (req, res) {
           connection.query("SELECT transaksikas.noref, transaksikas.transaksikas_tanggal, transaksikas.transaksikas_nominal, bukukas.bukukas_nama as namakas, kategorikas.kategorikas_nama as kategorikas, transaksikas.transaksikas_tipe  FROM transaksikas INNER join bukukas on transaksikas.bukukas_id=bukukas.bukukas_id INNER JOIN kategorikas on transaksikas.kategorikas_id=kategorikas.kategorikas_id", function (error, rows, fileds) {
             if (error) {
               console.log(error);
@@ -36,31 +36,37 @@ exports.TampilTransaksi = function (req, res) {
         };
 
 //menampilkan semua data user berdasarkan id
-exports.tampilberdasarkanid = function (req, res) {
-  let id = req.params.id;
-  connection.query("SELECT * FROM user WHERE user_id = ?", [id], function (
-    error,
-    rows,
-    fields
-  ) {
-    if (error) {
-      console.log(error);
-    } else {
-      response.ok(rows, res);
-    }
-  });
-};
+// exports.tampilberdasarkanid = function (req, res) {
+//   let id = req.params.id;
+//   connection.query("SELECT * FROM user WHERE user_id = ?", [id], function (
+//     error,
+//     rows,
+//     fields
+//   ) {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       response.ok(rows, res);
+//     }
+//   });
+// };
 
 //menambahkan data user
-exports.tambahUser = function (req, res) {
-  var id = req.body.user_id;
-  var nama = req.body.nama;
-  var username = req.body.username;
-  var password = req.body.password;
+exports.tambahTransaksi = function (req, res) {
+  // var id = req.body.user_id;
+  // var nama = req.body.nama;
+  // var username = req.body.username;
+  // var password = req.body.password;
+  var noref = req.body.noref;
+  var transaksikas_tanggal = req.body.transaksikas_tanggal
+  var transaksikas_nominal = req.body.transaksikas_nominal
+  var bukukas_id = req.body.bukukas_id
+  var kategorikas_id = req.body.kategorikas_id
+  var transaksikas_tipe= req.body.transaksikas_tipe
 
   connection.query(
-    "INSERT INTO user (user_id, nama, username, password) VALUES(?,?,?,?)",
-    [id, nama, username, password],
+    "INSERT INTO transaksikas (noref,transaksikas_tanggal,transaksikas_nominal, bukukas_id, kategorikas_id, transaksikas_tipe) VALUES(?,?,?,?,?,?)",
+    [noref,transaksikas_tanggal,transaksikas_nominal,bukukas_id,kategorikas_id,transaksikas_tipe],
     function (error, rows, fields) {
       if (error) {
         console.log(error);
@@ -72,15 +78,17 @@ exports.tambahUser = function (req, res) {
 };
 
 //mengubah data berdasarkan id
-exports.ubahUser = function (req, res) {
-  var id = req.body.user_id;
-  var nama = req.body.nama;
-  var username = req.body.username;
-  var password = req.body.password;
+exports.ubahTransaksi = function (req, res) {
+  var noref = req.body.noref;
+  var transaksikas_tanggal = req.body.transaksikas_tanggal
+  var transaksikas_nominal = req.body.transaksikas_nominal
+  var bukukas_id = req.body.bukukas_id
+  var kategorikas_id = req.body.kategorikas_id
+  var transaksikas_tipe= req.body.transaksikas_tipe
 
   connection.query(
-    "UPDATE user SET nama=?, username=?, password=? WHERE user_id=?",
-    [nama, username, password, id],
+    "UPDATE transaksikas SET transaksikas_tanggal=?, transaksikas_nominal=?, bukukas_id=?,kategorikas_id=?, transaksikas_tipe=? WHERE noref=?",
+    [transaksikas_tanggal,transaksikas_nominal,bukukas_id,kategorikas_id,transaksikas_tipe,noref],
     function (error, rows, fields) {
       if (error) {
         console.log(error);
@@ -92,9 +100,9 @@ exports.ubahUser = function (req, res) {
 };
 
 //Menghapus data berdasarkan id
-exports.hapusUser = function (req, res) {
-  var id = req.body.user_id;
-  connection.query("DELETE FROM user WHERE user_id=?", [id], function (
+exports.hapusTransaksi = function (req, res) {
+  var noref = req.body.noref;
+  connection.query("DELETE FROM transaksikas WHERE noref=?", [noref], function (
     error,
     rows,
     fields
