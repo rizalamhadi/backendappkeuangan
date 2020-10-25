@@ -15,6 +15,7 @@ exports.registrasi = function (req, res) {
     username: req.body.username,
     password: md5(req.body.password),
     role: req.body.role,
+    createdat: new Date(),
   };
   var query = "select username from ?? where ??=?";
   var table = ["user", "username", userdata.username];
@@ -65,7 +66,9 @@ exports.login = function (req, res) {
         var token = jwt.sign({ rows }, config.secret, {
           expiresIn: 1440,
         });
-        user_id = rows[0].user_id;
+        (user_id = rows[0].user_id);
+         
+     
         var data = {
           user_id: user_id,
           akses_token: token,
@@ -83,29 +86,17 @@ exports.login = function (req, res) {
               success: true,
               message: "token jwt tergenerate",
               token: token,
-              currUser: data.user_id,
+              userid: data.user_id,
+             
             });
           }
         });
       } else {
         res.json({
           erorr: true,
-          message: "email atau passwordnya salah",
+          message: "Username atau passwordnya salah",
         });
       }
-    }
-  });
-};
-
-exports.halamanrahasia = function (req, res) {
-  response.ok("Halaman ini hanya untuk user dengan role = 2!", res);
-};
-exports.adminm = function (req, res) {
-  connection.query("SELECT * FROM user", function (error, rows, fileds) {
-    if (error) {
-      console.log(error);
-    } else {
-      response.ok(rows, res);
     }
   });
 };

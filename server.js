@@ -12,11 +12,11 @@ app.use(morgan('dev'));
 app.use(cors());
 
 //panggil routes
-var routes = require("./routes/routes");
-routes(app);
+// var routes = require("./routes/routes");
+// routes(app);
 
 //daftarkan menu routes dari index
-app.use('/auth', require('./middleware'));
+app.use('/api', require('./routes/routes'));
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");
